@@ -1,0 +1,24 @@
+	Features:
+- remove video_extension
+- mettre sur git
+- Gerer le remove du fichier  dans toutes le situations ( dans un  exception handler par exemple?)
+- Don't download twice the same file
+- test unitaires
+- logging
+- debuging
+
+   	Bugs:
+- Handle this case
+   Reproduce  : curl -i http://localhost:5000/songs/add/PRATOS/RHINO
+
+- Get best resolution when multiple MP4 video format avaiable :
+  Reproduce : curl -i http://localhost:5000/songs/add/Pratos/UNIVERS
+
+- Get another video format when no MP4 available:
+   Reproduce : ?
+
+- Get video with spaces in the name
+
+- Get video with special chars in the name
+
+- Handle empty search results case
