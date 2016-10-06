@@ -1,0 +1,37 @@
+Installation note
+cd <root_dir>
+sudo apt-get install python-virtualenv
+virtualenv flask
+./flask/bin/activate
+./flask/bin/pip install flask
+./flask.bin/pip install pytube
+./flask/bin/pip install moviepy
+./flask/bin/pip install nosetests
+# cd ./flask/tmp/
+# git clone git://github.com/tuffy/python-audio-tools.git .
+
+
+Launch web server :
+cd <root_dir>
+./flask/bin/python ./musric_server/music_server.py
+
+Run all tests :
+cd <root_dir>
+./flask/bin/nosetests
+
+Run a single file :
+cd <root_dir>
+./flask/bin/nosetests ./tests/converter_tests.py
+
+Run a single test:
+cd <root_dir>
+./flask/bin/nosetests ./tests/download_tests.py:DownloadTestCase.test_format_youtube_query
+
+Application structure :
+http://docs.python-guide.org/en/latest/writing/structure/
+
+Flask tutorial:
+http://blog.miguelgrinberg.com/post/designing-a-restful-api-with-python-and-flask
+
+Nosetests reference :
+http://nose.readthedocs.io/
