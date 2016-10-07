@@ -1,6 +1,7 @@
 import os
 import sys
 import unittest
+from pprint import pprint
 from .context import music_server
 from music_server import util
 from music_server import config
@@ -51,16 +52,39 @@ class DownloadTestCase(unittest.TestCase):
         # then
         self.assertEquals(first_result, expected_result)
 
-#     def test_download_first_result(self):
-#         # given
-#         search_query = "PRATOS OSNI"
-#         print ("Test download video with search query: " + search_query)
-#         # when
-#         video = download.download_first_result(search_query)
-#         # then
-#         print ('Video result: ' + video)
-#         self.assertFalse(video == "", "Video string is empty")
-#         self.assertTrue(os.path.isfile(video), "Video is not there")
+    def test_download_video(self):
+        #given
+        url = "https://www.youtube.com/watch?v=QegtQLZjVmY"
+        # when
+        video = download.download_video(url)
+        # then
+        # pprint(vars(video))
+        self.assertEquals(video.extension, 'mp4')
+        self.assertEquals(video.filename, u'PRATOS - TANT DE DESIR')
+
+    def test_download_video_when_multiple_mp4(self):
+        #given
+        url = 'https://www.youtube.com/watch?v=yl5WfT7IDDU'
+        video = download.download_video(url)
+        # then
+        # pprint(vars(video))
+        self.assertEquals(video.extension, 'mp4')
+        self.assertEquals(video.filename, u'Roosevelt - Elliot (Official Video)')
+        self.assertEqual(video.resolution, '720p')
+
+    def test_download_video_no_mp4(self):
+        pass
+
+    def test_download_first_result(self):
+        # given
+        search_query = "PRATOS OSNI"
+        print ("Test download video with search query: " + search_query)
+        # when
+        video = download.download_first_result(search_query)
+        # then
+        print ('Video result: ' + video)
+        self.assertFalse(video == "", "Video string is empty")
+        self.assertTrue(os.path.isfile(video), "Video is not there")
 
 if __name__ == '__main__':
     unittest.main()

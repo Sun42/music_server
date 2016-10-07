@@ -7,5 +7,5 @@ setup(name='music_server',
       author='Christophe Sundas',
       author_email='sundas.christophe@gmail.com',
       license='MIT',
-      packages=['music_server',  'tests'],
+      packages=['music_server'],
       zip_safe=False)

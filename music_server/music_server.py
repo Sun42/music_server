@@ -6,40 +6,40 @@ from download import download_first_result
 from converter import video_to_audio
 
 app = Flask(__name__)
-songs = [
-    {
-        'id': 1,
-        'title': 'Pelican Glide',
-        'artist': 'Steve Bug',
-        'file': 'Steve_Bug__Pelican_Glide.mp3'
-    },
-    {
-        'id': 2,
-        'title': 'Gallowdance',
-        'artist': 'Lebanon Hanover',
-        'file': 'Lebanon_Hanover__Gallowdance.mp3'
-    }
-    ]
-
-@app.route('/songs/<artist_name>/<title_name>', methods=['GET'])
-
-def get_song(artist_name, title_name):
-    song = None
-    for song in songs:
-        if song['artist'] == artist_name and song['title'] == title_name:
-            song['link'] = url_for('static', filename=  song['file'])
-            return jsonify ({'song': song})
-    abort(404)
-
-
-@app.route('/songs/id/<int:song_id>', methods=['GET'])
-
-def get_song_by_id(song_id):
-        for song in songs:
-                if song['id'] == song_id:
-                        song['link'] = url_for('static', filename=  song['file'])
-                        return jsonify ({'song': song})
-        abort(404)
+# songs = [
+#     {
+#         'id': 1,
+#         'title': 'Pelican Glide',
+#         'artist': 'Steve Bug',
+#         'file': 'Steve_Bug__Pelican_Glide.mp3'
+#     },
+#     {
+#         'id': 2,
+#         'title': 'Gallowdance',
+#         'artist': 'Lebanon Hanover',
+#         'file': 'Lebanon_Hanover__Gallowdance.mp3'
+#     }
+#     ]
+#
+# @app.route('/songs/<artist_name>/<title_name>', methods=['GET'])
+#
+# def get_song(artist_name, title_name):
+#     song = None
+#     for song in songs:
+#         if song['artist'] == artist_name and song['title'] == title_name:
+#             song['link'] = url_for('static', filename=  song['file'])
+#             return jsonify ({'song': song})
+#     abort(404)
+#
+#
+# @app.route('/songs/id/<int:song_id>', methods=['GET'])
+#
+# def get_song_by_id(song_id):
+#         for song in songs:
+#                 if song['id'] == song_id:
+#                         song['link'] = url_for('static', filename=  song['file'])
+#                         return jsonify ({'song': song})
+#         abort(404)
 
 
 @app.route('/songs/add/<artist_name>/<song_name>')
