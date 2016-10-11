@@ -4,54 +4,22 @@ from flask import Flask, jsonify, abort, make_response, url_for
 import config
 from download import download_first_result
 from converter import video_to_audio
+import util
 
 app = Flask(__name__)
-# songs = [
-#     {
-#         'id': 1,
-#         'title': 'Pelican Glide',
-#         'artist': 'Steve Bug',
-#         'file': 'Steve_Bug__Pelican_Glide.mp3'
-#     },
-#     {
-#         'id': 2,
-#         'title': 'Gallowdance',
-#         'artist': 'Lebanon Hanover',
-#         'file': 'Lebanon_Hanover__Gallowdance.mp3'
-#     }
-#     ]
-#
-# @app.route('/songs/<artist_name>/<title_name>', methods=['GET'])
-#
-# def get_song(artist_name, title_name):
-#     song = None
-#     for song in songs:
-#         if song['artist'] == artist_name and song['title'] == title_name:
-#             song['link'] = url_for('static', filename=  song['file'])
-#             return jsonify ({'song': song})
-#     abort(404)
-#
-#
-# @app.route('/songs/id/<int:song_id>', methods=['GET'])
-#
-# def get_song_by_id(song_id):
-#         for song in songs:
-#                 if song['id'] == song_id:
-#                         song['link'] = url_for('static', filename=  song['file'])
-#                         return jsonify ({'song': song})
-#         abort(404)
 
+@app.route('/songs/get/<artist_name>/<song_name>')
 
-@app.route('/songs/add/<artist_name>/<song_name>')
-
-def add_song(artist_name, song_name):
-        video_file = download_first_result(artist_name + ' ' + song_name)
-        print("Video file name : " + video_file)
-        audio_file = video_to_audio(video_file)
-        new_audio_filename = config.music_folder + os.path.basename(audio_file)
-        print("Audio file name" + audio_file)
-        os.remove(video_file)
-        shutil.move(audio_file, new_audio_filename)
+def get_song(artist_name, song_name):
+        audio_name = util.make_audio_name(artist_name, song_name)
+        new_audio_filename = config.music_folder + audio_name
+        if not util.find_in_filesystem(config.music_folder, audio_name):
+            video_file = download_first_result(artist_name + ' ' + song_name)
+            print("Video file name : " + video_file)
+            downloaded_audio_file = video_to_audio(video_file)
+            print("Audio file name" + downloaded_audio_file)
+            os.remove(video_file)
+            shutil.move(downloaded_audio_file, new_audio_filename)
         return jsonify({'ok' : new_audio_filename})
 
 @app.errorhandler(404)

@@ -1,21 +1,21 @@
     Features:
+- display outputs when passing tests
+- when no internet connection
+File "/home/chris/Coding/python/music_server/music_server/download.py", line 19, in fetch_first_result
+return search_results[0]
+IndexError: list index out of range
 - create /check and directories at startup (config file?)
+- change API DOWNLOAD
+- dynamic connfig app path
 - add database
 - debuging (https://pypi.python.org/pypi/objbrowser) ??
 - verify audio file integrity with audiotools http://audiotools.sourceforge.net/ or with this snippet http://peterjc.com/python/verifying-that-an-mp3-file-is-valid-in-python/
 - set up eclipse unittest, git
 - Gerer le remove du fichier  dans toutes le situations ( dans un  exception handler par exemple?)
-- Don't download twice the same file
 - logging
 - add torrent search and download yourbittorent.dom/music.html
-
+- nova playlists
 Bugs:
-- when no internet connection
-File "/home/chris/Coding/python/music_server/music_server/download.py", line 19, in fetch_first_result
-return search_results[0]
-IndexError: list index out of range
-
-
 - add test  Get another format video format when no MP4 available:
 
 - Get video with spaces in the name

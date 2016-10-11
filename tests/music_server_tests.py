@@ -20,11 +20,10 @@ class MusicServerTestCase(unittest.TestCase):
         assert b'Not found' in rv.data
 
     def test_valid_query(self):
-        rv = self.app.get('/songs/add/PRATOS/OSNI')
-        dir(rv.data)
-
-        print(rv.data)
-        assert b'.mp3' in rv.data
+        rv = self.app.get('/songs/get/PRATOS/OSNI')
+        # dir(rv.data)
+        # print(rv.data)
+        assert b'pratos-osni.mp3' in rv.data
 
 
 if __name__ == '__main__':
