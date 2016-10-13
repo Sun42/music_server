@@ -42,7 +42,7 @@ class DownloadTestCase(unittest.TestCase):
         # then
         self.assertEqual(youtube_query, expected_result, "Youtube query formatter failed")
 
-    def test_fetch_first_result(self):
+    def test_fetch_first_result_ok(self):
         # given
         with open(config.test_folder + 'pratos_osni_html_content', 'r') as myfile:
             html_content = myfile.read()
@@ -51,6 +51,22 @@ class DownloadTestCase(unittest.TestCase):
         first_result = music_server.download.fetch_first_result(html_content)
         # then
         self.assertEquals(first_result, expected_result)
+
+    def test_fetch_first_result_when_empty(self):
+        # given
+        html_content = None
+        # when
+        first_result = music_server.download.fetch_first_result(html_content)
+        # then
+        self.assertEquals(first_result, None)
+
+    def test_fetch_first_result_when_no_result(self):
+        # given
+        html_content = "wrong html content"
+        # when
+        first_result = music_server.download.fetch_first_result(html_content)
+        # then
+        self.assertEquals(first_result, None)
 
     def test_download_video(self):
         #given
@@ -85,6 +101,14 @@ class DownloadTestCase(unittest.TestCase):
         print ('Video result: ' + video)
         self.assertFalse(video == "", "Video string is empty")
         self.assertTrue(os.path.isfile(video), "Video is not there")
+
+    def test_download_first_result_when_none(self):
+        # given
+        search_query = None
+        # when
+        video = download.download_first_result(search_query)
+        # then
+        self.assertEquals(video, None)
 
 if __name__ == '__main__':
     unittest.main()

@@ -15,9 +15,12 @@ Launch web server :
 cd <root_dir>
 ./flask/bin/python ./musric_server/music_server.py
 
+Call web server :
+curl -i http://localhost:5000/songs/download/PRATOS/UNIVERS
+
 Run all tests :
 cd <root_dir>
-./flask/bin/nosetests
+./flask/bin/nosetests ./tests
 
 Run a single file :
 cd <root_dir>
