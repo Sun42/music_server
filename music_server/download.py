@@ -41,7 +41,10 @@ def download_first_result(search_query):
         return search_query
     req = urllib2.Request(format_youtube_query(search_query))
     response = urllib2.urlopen(req)
-    url = "http://www.youtube.com/watch?v=" + fetch_first_result(response.read())
+    fetched_result = fetch_first_result(response.read())
+    if not fetched_result:
+        return None
+    url = "http://www.youtube.com/watch?v=" + fetched_result
     video = download_video(url)
     video_full_path = config.tmp_folder + video.filename + '.' + video.extension
     logging.info(video_full_path)

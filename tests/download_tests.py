@@ -1,6 +1,8 @@
 import os
 import sys
 import unittest
+from mock import MagicMock
+from mock import patch
 from pprint import pprint
 from .context import music_server
 from music_server import util
@@ -105,6 +107,17 @@ class DownloadTestCase(unittest.TestCase):
     def test_download_first_result_when_none(self):
         # given
         search_query = None
+        # when
+        video = download.download_first_result(search_query)
+        # then
+        self.assertEquals(video, None)
+
+    # @patch('music_server.download.fetch_first_result') /*, mock_a*/
+    def test_download_first_result_when_fetch_first_result_none(self):
+        # mock_a.return_value = MagicMock(response = None)
+        # given
+        search_query="PRATOS OSNIIII"
+        # search_query="PRATOS OSNI"
         # when
         video = download.download_first_result(search_query)
         # then
