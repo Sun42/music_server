@@ -8,11 +8,12 @@ import util
 import logging
 from inspect import getmembers
 from pprint import pprint
-
+from flask_cors import CORS, cross_origin
 
 logging.basicConfig(filename = config.application_path + 'music_server.log' ,format='%(asctime)s %(levelname)s %(message)s', level=logging.DEBUG)
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/songs/get/<artist_name>/<song_name>')
 

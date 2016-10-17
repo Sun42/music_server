@@ -1,4 +1,5 @@
 Features:
+- implementing CORS
 - display outputs when passing tests, logging
 - add try except urllib
 - create /check and directories at startup (config file?)
