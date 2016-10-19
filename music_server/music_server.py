@@ -2,7 +2,7 @@ import os
 import shutil
 from flask import Flask, jsonify, abort, make_response, url_for, request
 import config
-from download import download_first_result
+from youtube_wrapper import download_first_result
 from converter import video_to_audio
 import util
 import logging

@@ -9,9 +9,9 @@ from pytube import YouTube
 from .context import music_server
 from music_server import util
 from music_server import config
-from music_server import download
+from music_server import youtube_wrapper
 
-class DownloadTestCase(unittest.TestCase):
+class YoutubeWrapperTestCase(unittest.TestCase):
 
     def setUp(self):
         music_server.util.clean_dir(music_server.config.tmp_folder)
@@ -24,7 +24,7 @@ class DownloadTestCase(unittest.TestCase):
         search_query = "simple_query"
         expected_result = "http://youtube.com/results?search_query=simple_query"
         # when
-        youtube_query = music_server.download.format_youtube_query(search_query)
+        youtube_query = music_server.youtube_wrapper.format_youtube_query(search_query)
         # then
         self.assertEqual(youtube_query, expected_result, "Youtube query formatter failed")
 
@@ -33,7 +33,7 @@ class DownloadTestCase(unittest.TestCase):
         search_query = "a b"
         expected_result = "http://youtube.com/results?search_query=a+b"
         # when
-        youtube_query = music_server.download.format_youtube_query(search_query)
+        youtube_query = music_server.youtube_wrapper.format_youtube_query(search_query)
         # then
         self.assertEqual(youtube_query, expected_result, "Youtube query formatter failed")
 
@@ -42,7 +42,7 @@ class DownloadTestCase(unittest.TestCase):
         search_query = "a+b"
         expected_result = "http://youtube.com/results?search_query=a%2Bb"
         # when
-        youtube_query = music_server.download.format_youtube_query(search_query)
+        youtube_query = music_server.youtube_wrapper.format_youtube_query(search_query)
         # then
         self.assertEqual(youtube_query, expected_result, "Youtube query formatter failed")
 
@@ -50,7 +50,7 @@ class DownloadTestCase(unittest.TestCase):
         # given
         html_content = None
         # when
-        first_result = music_server.download.fetch_results(html_content, 1)
+        first_result = music_server.youtube_wrapper.fetch_results(html_content, 1)
         # then
         self.assertEquals(first_result, None)
 
@@ -58,7 +58,7 @@ class DownloadTestCase(unittest.TestCase):
         # given
         html_content = "wrong html content"
         # when
-        first_result = music_server.download.fetch_results(html_content, 1)
+        first_result = music_server.youtube_wrapper.fetch_results(html_content, 1)
         # then
         self.assertEquals(first_result, None)
 
@@ -67,7 +67,7 @@ class DownloadTestCase(unittest.TestCase):
         with open(config.test_folder + 'pratos_osni_html_content', 'r') as myfile:
             html_content = myfile.read()
         # when
-        results = music_server.download.fetch_results(html_content, 1)
+        results = music_server.youtube_wrapper.fetch_results(html_content, 1)
         # then
         expected_result = "io8SgjNcNbk"
         self.assertEquals(len(results), 1)
@@ -78,7 +78,7 @@ class DownloadTestCase(unittest.TestCase):
         with open(config.test_folder + 'pratos_osni_html_content', 'r') as myfile:
             html_content = myfile.read()
         # when
-        results = music_server.download.fetch_results(html_content, 10)
+        results = music_server.youtube_wrapper.fetch_results(html_content, 10)
         # then
         self.assertEquals(len(results), 10)
 
@@ -87,7 +87,7 @@ class DownloadTestCase(unittest.TestCase):
         with open(config.test_folder + 'pratos_osni_html_content', 'r') as myfile:
             html_content = myfile.read()
         # when
-        results = music_server.download.fetch_results(html_content)
+        results = music_server.youtube_wrapper.fetch_results(html_content)
         # then
         self.assertEquals(len(results), 54)
 #
@@ -95,7 +95,7 @@ class DownloadTestCase(unittest.TestCase):
 #         #given
 #         url = "https://www.youtube.com/watch?v=QegtQLZjVmY"
 #         # when
-#         video = download.download_video(url)
+#         video = youtube_wrapper.download_video(url)
 #         # then
 #         # pprint(vars(video))
 #         self.assertEquals(video.extension, 'mp4')
@@ -106,31 +106,30 @@ class DownloadTestCase(unittest.TestCase):
         #given
         url = 'https://www.youtube.com/watch?v=yl5WfT7IDDU'
         yt = YouTube(url)
-        video = download.select_video(yt)
+        video = youtube_wrapper.select_video(yt)
         # then
-        # pprint(vars(video))
         self.assertEquals(video.extension, 'mp4')
         self.assertEquals(video.filename, u'Roosevelt - Elliot (Official Video)')
         self.assertEqual(video.resolution, '720p')
-
-    def test_download_video_no_mp4(self):
-        pass
-    # to mock video.download
-    def test_download_first_result(self):
-        # given
-        search_query = "PRATOS OSNI"
-        # when
-        video = download.download_first_result(search_query)
-        # then
-        print ('Video result: ' + video)
-        self.assertFalse(video == "", "Video string is empty")
-        self.assertTrue(os.path.isfile(video), "Video is not there")
+# TODO
+#     def test_download_video_no_mp4(self):
+#         pass
+#     # to mock video.download
+#     def test_download_first_result(self):
+#         # given
+#         search_query = "PRATOS OSNI"
+#         # when
+#         video = youtube_wrapper.download_first_result(search_query)
+#         # then
+#         print ('Video result: ' + video)
+#         self.assertFalse(video == "", "Video string is empty")
+#         self.assertTrue(os.path.isfile(video), "Video is not there")
 
     def test_download_first_result_when_none(self):
         # given
         search_query = None
         # when
-        video = download.download_first_result(search_query)
+        video = youtube_wrapper.download_first_result(search_query)
         # then
         self.assertEquals(video, None)
 
@@ -141,7 +140,7 @@ class DownloadTestCase(unittest.TestCase):
         search_query="PRATOS OSNIIII"
         # search_query="PRATOS OSNI"
         # when
-        video = download.download_first_result(search_query)
+        video = youtube_wrapper.download_first_result(search_query)
         # then
         self.assertEquals(video, None)
 
