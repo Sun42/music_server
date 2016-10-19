@@ -1,6 +1,6 @@
 import os
 import shutil
-from flask import Flask, jsonify, abort, make_response, url_for
+from flask import Flask, jsonify, abort, make_response, url_for, request
 import config
 from download import download_first_result
 from converter import video_to_audio
@@ -16,7 +16,6 @@ app = Flask(__name__)
 CORS(app)
 
 @app.route('/songs/get/<artist_name>/<song_name>')
-
 def get_song(artist_name, song_name):
         audio_name = util.make_audio_name(artist_name, song_name)
         new_audio_filename = config.music_folder + audio_name
@@ -29,15 +28,31 @@ def get_song(artist_name, song_name):
             shutil.move(downloaded_audio_file, new_audio_filename)
         return jsonify({'ok' : new_audio_filename})
 
+@app.route('/query/<search_query>')
+def query(search_query):
+#     video_file = download_first_result(search_query)
+#     logging.info("Video file name : " + video_file)
+#     downloaded_audio_file = video_to_audio(video_file)
+#     logging.info("Audio file name" + downloaded_audio_file)
+#     os.remove(video_file)
+    return jsonify({'ok' : request.url_root})
+
 @app.errorhandler(404)
 def not_found(error):
     # logging.warning(dir(vars(error)))
     pprint(getmembers(error))
     return make_response(jsonify({'error': 'Not found'}), 404)
 
-@app.route('/<path:path>')
-def static_file(path):
-            return app.send_static_file(path)
+# @app.route('/<path:path>')
+# def static_file(path):
+#     return app.send_static_file(path)
+
+# @app.route('/mp3/<file>')
+# def serve_file(file):
+#     logging.info(file)
+#     logging.info("serve file function")
+#     return app.send_static_file(file)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -25,6 +25,9 @@ class MusicServerTestCase(unittest.TestCase):
         # print(rv.data)
         assert b'pratos-osni.mp3' in rv.data
 
+    def test_valid_return_url(self):
+        rv = self.app.get('/query/PRATOS%20%OSNI')
+        print(rv.data)
 
 if __name__ == '__main__':
     unittest.main()

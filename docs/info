@@ -7,7 +7,8 @@ virtualenv flask
 ./flask.bin/pip install pytube
 ./flask/bin/pip install moviepy
 ./flask/bin/pip install nosetests
-./flask.bin/pip install -U flask-cors
+./flask/bin/pip install -U flask-cors
+./flask/bin/pip install mock
 # cd ./flask/tmp/
 # git clone git://github.com/tuffy/python-audio-tools.git .
 
@@ -21,15 +22,15 @@ curl -i http://localhost:5000/songs/download/PRATOS/UNIVERS
 
 Run all tests :
 cd <root_dir>
-./flask/bin/nosetests ./tests
+./flask/bin/nosetests --nocapture --nologcapture --verbosity=3 ./tests
 
 Run a single file :
 cd <root_dir>
-./flask/bin/nosetests ./tests/converter_tests.py
+./flask/bin/nosetests --nocapture --nologcapture --verbosity=3 /tests/converter_tests.py
 
 Run a single test:
 cd <root_dir>
-./flask/bin/nosetests ./tests/download_tests.py:DownloadTestCase.test_format_youtube_query
+./flask/bin/nosetests --nocapture --nologcapture --verbosity=3 ./tests/download_tests.py:DownloadTestCase.test_format_youtube_query
 
 Application structure :
 http://docs.python-guide.org/en/latest/writing/structure/

@@ -4,6 +4,8 @@ import unittest
 from mock import MagicMock
 from mock import patch
 from pprint import pprint
+from pytube import YouTube
+
 from .context import music_server
 from music_server import util
 from music_server import config
@@ -44,21 +46,11 @@ class DownloadTestCase(unittest.TestCase):
         # then
         self.assertEqual(youtube_query, expected_result, "Youtube query formatter failed")
 
-    def test_fetch_first_result_ok(self):
-        # given
-        with open(config.test_folder + 'pratos_osni_html_content', 'r') as myfile:
-            html_content = myfile.read()
-        expected_result = "io8SgjNcNbk"
-        # when
-        first_result = music_server.download.fetch_first_result(html_content)
-        # then
-        self.assertEquals(first_result, expected_result)
-
     def test_fetch_first_result_when_empty(self):
         # given
         html_content = None
         # when
-        first_result = music_server.download.fetch_first_result(html_content)
+        first_result = music_server.download.fetch_results(html_content, 1)
         # then
         self.assertEquals(first_result, None)
 
@@ -66,24 +58,55 @@ class DownloadTestCase(unittest.TestCase):
         # given
         html_content = "wrong html content"
         # when
-        first_result = music_server.download.fetch_first_result(html_content)
+        first_result = music_server.download.fetch_results(html_content, 1)
         # then
         self.assertEquals(first_result, None)
 
-    def test_download_video(self):
-        #given
-        url = "https://www.youtube.com/watch?v=QegtQLZjVmY"
+    def test_fetch_results_limit_one(self):
+        # given
+        with open(config.test_folder + 'pratos_osni_html_content', 'r') as myfile:
+            html_content = myfile.read()
         # when
-        video = download.download_video(url)
+        results = music_server.download.fetch_results(html_content, 1)
         # then
-        # pprint(vars(video))
-        self.assertEquals(video.extension, 'mp4')
-        self.assertEquals(video.filename, u'PRATOS - TANT DE DESIR')
+        expected_result = "io8SgjNcNbk"
+        self.assertEquals(len(results), 1)
+        self.assertEquals(results[0], expected_result)
 
-    def test_download_video_when_multiple_mp4(self):
+    def test_fetch_results_limit_ten(self):
+        # given
+        with open(config.test_folder + 'pratos_osni_html_content', 'r') as myfile:
+            html_content = myfile.read()
+        # when
+        results = music_server.download.fetch_results(html_content, 10)
+        # then
+        self.assertEquals(len(results), 10)
+
+    def test_fetch_results_no_limit(self):
+        # given
+        with open(config.test_folder + 'pratos_osni_html_content', 'r') as myfile:
+            html_content = myfile.read()
+        # when
+        results = music_server.download.fetch_results(html_content)
+        # then
+        self.assertEquals(len(results), 54)
+#
+#     def test_download_video(self):
+#         #given
+#         url = "https://www.youtube.com/watch?v=QegtQLZjVmY"
+#         # when
+#         video = download.download_video(url)
+#         # then
+#         # pprint(vars(video))
+#         self.assertEquals(video.extension, 'mp4')
+#         self.assertEquals(video.filename, u'PRATOS - TANT DE DESIR')
+
+    # when multiple mp4 available , assure that we take the highest resolution
+    def test_select_video_when_multiple_mp4(self):
         #given
         url = 'https://www.youtube.com/watch?v=yl5WfT7IDDU'
-        video = download.download_video(url)
+        yt = YouTube(url)
+        video = download.select_video(yt)
         # then
         # pprint(vars(video))
         self.assertEquals(video.extension, 'mp4')
@@ -92,11 +115,10 @@ class DownloadTestCase(unittest.TestCase):
 
     def test_download_video_no_mp4(self):
         pass
-
+    # to mock video.download
     def test_download_first_result(self):
         # given
         search_query = "PRATOS OSNI"
-        print ("Test download video with search query: " + search_query)
         # when
         video = download.download_first_result(search_query)
         # then

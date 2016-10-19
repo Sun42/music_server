@@ -1,19 +1,36 @@
 Features:
-- implementing CORS
-- display outputs when passing tests, logging
-- add try except urllib
-- create /check and directories at startup (config file?)
-- dynamic config app path
+- serve static file
+- return url name of the mp3
+- add API return a list of youtube matches
+- unrestrict API songs/get "free text"
+- remove artist/title naming convention
 - add source soundcloud
-- add database
-- debuging (https://pypi.python.org/pypi/objbrowser) ??
 - verify audio file integrity with audiotools http://audiotools.sourceforge.net/ or with this snippet http://peterjc.com/python/verifying-that-an-mp3-file-is-valid-in-python/
 - set up eclipse unittest, git
 - Gerer le remove du fichier dans toutes le situations (dans un  exception handler par exemple?)
 - add torrent search and download yourbittorent.dom/music.html
 - nova playlists
+- add database
+
+NiceToHave:
+- display outputs when passing tests, logging
+- mock resources in unit tests
+- integrate clients repo in server repo
+- add try except urllib
+- create /check and directories at startup (config file?)
+- dynamic config app path
+- debuging (https://pypi.python.org/pypi/objbrowser) ??
+
 
 Bugs:
+curl -i "http://localhost:5000/songs/get/PRATOS/OSNIIII"
+-   File "/home/chris/Coding/python/music_server/music_server/music_server.py", line 24, in get_song
+    video_file = download_first_result(artist_name + ' ' + song_name)
+  File "/home/chris/Coding/python/music_server/music_server/download.py", line 44, in download_first_result
+    url = "http://www.youtube.com/watch?v=" + fetch_first_result(response.read())
+TypeError: cannot concatenate 'str' and 'NoneType' objects
+
+
 - add test  Get another format video format when no MP4 available:
 
 - Get video with spaces in the name
