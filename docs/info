@@ -1,6 +1,8 @@
 Installation note
 cd <root_dir>
 sudo apt-get install python-virtualenv
+sudo apt-get install python-dev
+sudo apt-get install nginx
 virtualenv flask
 ./flask/bin/activate
 ./flask/bin/pip install flask
@@ -9,6 +11,7 @@ virtualenv flask
 ./flask/bin/pip install nosetests
 ./flask/bin/pip install -U flask-cors
 ./flask/bin/pip install mock
+./flask/bin/pip install uwsgi
 # cd ./flask/tmp/
 # git clone git://github.com/tuffy/python-audio-tools.git .
 
@@ -40,3 +43,7 @@ http://blog.miguelgrinberg.com/post/designing-a-restful-api-with-python-and-flas
 
 Nosetests reference :
 http://nose.readthedocs.io/
+
+Uwsgi/Nginx installation:
+https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-uwsgi-and-nginx-on-ubuntu-14-04
+https://code-maven.com/deploying-python-flask-using-uwsgi-on-ubuntu-14-04

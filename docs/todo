@@ -1,5 +1,4 @@
 Features:
-- serve static file
 - return url name of the mp3
 - add API return a list of youtube matches
 - unrestrict API songs/get "free text"
@@ -10,7 +9,6 @@ Features:
 - Gerer le remove du fichier dans toutes le situations (dans un  exception handler par exemple?)
 - add torrent search and download yourbittorent.dom/music.html
 - nova playlists
-- add database
 
 NiceToHave:
 - display outputs when passing tests, logging
