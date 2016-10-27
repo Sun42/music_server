@@ -1,9 +1,18 @@
 import os
+import shutil
+import tempfile
+import unittest
+import urllib
+
+
+from mock import patch
+from objbrowser import browse
+
 from .context import music_server
 from music_server import music_server
 from music_server import config
-import unittest
-import tempfile
+from music_server import util
+from music_server import youtube_download
 
 class MusicServerTestCase(unittest.TestCase):
 
@@ -14,20 +23,31 @@ class MusicServerTestCase(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_empty_response(self):
+    def test_root_404(self):
         rv = self.app.get('/')
-        dir(rv.data)
         assert b'Not found' in rv.data
 
-    def test_valid_query(self):
-        rv = self.app.get('/songs/get/PRATOS/OSNI')
-        # dir(rv.data)
-        # print(rv.data)
-        assert b'pratos-osni.mp3' in rv.data
+    #  @todo mock
+    def test_search(self):
+        # given
+        search_query = "pratos osni"
+        # when
+        rv = self.app.get('/search/pratos osni')
+        # then
+        assert b'ok' in rv.data
 
-    def test_valid_return_url(self):
-        rv = self.app.get('/query/PRATOS%20%OSNI')
-        print(rv.data)
+    #todo mock video conversion
+    @patch('music_server.youtube_download.YoutubeDownload.download')
+    # @patch('music_server.converter.video_to_audio')
+    def test_download(self, download_patch):
+        # given
+        shutil.copy(config.test_folder + "video_ok.mp4", config.tmp_folder + "video_ok.mp4")
+        url = urllib.quote('https://www.youtube.com/watch?v=WPw7nlluRdc')
+        download_patch.return_value = config.tmp_folder + 'video_ok.mp4'
+        # when
+        rv = self.app.get("/download/" + url)
+        # then
+        assert b'http://localhost/music/video_ok.mp3' in rv.data
 
 if __name__ == '__main__':
     unittest.main()

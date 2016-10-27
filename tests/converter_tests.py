@@ -16,11 +16,11 @@ class ConverterTestCase(unittest.TestCase):
     def test_video_to_audio__when_mp4(self):
         # given
         video_filename = "video_ok.mp4"
-        # copy it to the tmp folder, audio file will be written in the same directory and be cleaned after the test
+        # copy it to the tmp folder, audio file will be written
         shutil.copy(music_server.config.test_folder + 'video_ok.mp4', music_server.config.tmp_folder)
         video_file = music_server.config.tmp_folder + 'video_ok.mp4'
         # when
-        audio_file = music_server.converter.video_to_audio(video_file)
+        audio_file = music_server.converter.video_to_audio(video_file, music_server.config.tmp_folder)
         # then
         self.assertEquals(audio_file, music_server.config.tmp_folder + 'video_ok.mp3')
 

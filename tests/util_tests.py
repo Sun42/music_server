@@ -53,6 +53,15 @@ class UtilTestCase(unittest.TestCase):
         # then
         self.assertEquals(trimmed_filename, 'video..')
 
+    def test_extract_filename(self):
+        # given
+        file_path = "/home/chris/dir/myfile.txt"
+        # when
+        filename = music_server.util.extract_filename(file_path)
+        # then
+        self.assertEquals(filename, 'myfile.txt')
+
+
     def test_normalize_to_lower(self):
         # given
         name = 'NoMdeLaRTISTE'
