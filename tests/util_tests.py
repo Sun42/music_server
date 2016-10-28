@@ -107,7 +107,7 @@ class UtilTestCase(unittest.TestCase):
         # given
         present_file = 'present.mp3'
         # when
-        is_present = util.find_in_filesystem(config.test_folder, present_file)
+        is_present = util.find_in_filesystem(config.test_resources_folder, present_file)
         # then
         self.assertTrue(is_present, "File {} not found".format(present_file))
 
@@ -115,6 +115,6 @@ class UtilTestCase(unittest.TestCase):
         # given
         absent_file = 'absent.mp3'
         # when
-        is_present = util.find_in_filesystem(config.test_folder, absent_file)
+        is_present = util.find_in_filesystem(config.test_resources_folder, absent_file)
         # then
         self.assertFalse(is_present,  "File {} found".format(absent_file))

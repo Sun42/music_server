@@ -58,9 +58,9 @@ class YoutubeSearchTestCase(unittest.TestCase):
 
     def test_fetch_results(self):
         # given
-        with open(config.test_folder + 'youtube_search_pratos_osni.html', 'r') as myfile:
+        with open(config.test_resources_folder + 'youtube_search_pratos_osni.html', 'r') as myfile:
             html_content = myfile.read()
-        with open(config.test_folder + 'youtube_search_pratos_osni.json', 'r') as myfile2:
+        with open(config.test_resources_folder + 'youtube_search_pratos_osni.json', 'r') as myfile2:
             expected_links = json.loads(myfile2.read())
         # when
         results = youtube_search.fetch_results(html_content)
@@ -70,10 +70,10 @@ class YoutubeSearchTestCase(unittest.TestCase):
     @patch('music_server.youtube_search.get_html')
     def test_youtube_search(self, test_patch):
         # given
-        with open(music_server.config.test_folder + 'youtube_search_pratos_osni.html') as fh:
+        with open(music_server.config.test_resources_folder + 'youtube_search_pratos_osni.html') as fh:
             mock_html = fh.read()
             test_patch.return_value = mock_html
-        with open(config.test_folder + 'youtube_search_pratos_osni.json', 'r') as myfile2:
+        with open(config.test_resources_folder + 'youtube_search_pratos_osni.json', 'r') as myfile2:
             expected_links = json.loads(myfile2.read())
         # when
             results = youtube_search.YoutubeSearch("pratos osni").video_ids

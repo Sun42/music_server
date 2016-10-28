@@ -26,7 +26,7 @@ class YoutubeDownloadTestCase(unittest.TestCase):
         # given
         url = "https://www.youtube.com/watch?v=QegtQLZjVmY"
         # mock Youtube resource
-        with open(music_server.config.test_folder + 'test_select_mp4_over_other_format.html') as fh:
+        with open(music_server.config.test_resources_folder + 'test_select_mp4_over_other_format.html') as fh:
             mock_html = fh.read()
         with mock.patch('pytube.api.urlopen') as urlopen:
             urlopen.return_value.read.return_value = mock_html
@@ -50,7 +50,7 @@ class YoutubeDownloadTestCase(unittest.TestCase):
         # given
         url = 'https://www.youtube.com/watch?v=yl5WfT7IDDU'
         # mock Youtube resource
-        with open(music_server.config.test_folder + 'youtube_multiple_mp4.html') as fh:
+        with open(music_server.config.test_resources_folder + 'youtube_multiple_mp4.html') as fh:
             mock_html = fh.read()
         with mock.patch('pytube.api.urlopen') as urlopen:
             urlopen.return_value.read.return_value = mock_html
@@ -74,7 +74,7 @@ class YoutubeDownloadTestCase(unittest.TestCase):
 #         # given
 #         url = 'https://www.youtube.com/watch?v=yl5WfT7IDDU'
 #         # mock Youtube resource
-#         with open(music_server.config.test_folder + 'youtube_no_mp4.html') as fh:
+#         with open(music_server.config.test_resources_folder + 'youtube_no_mp4.html') as fh:
 #             mock_html = fh.read()
 #         with mock.patch('pytube.api.urlopen') as urlopen:
 #             urlopen.return_value.read.return_value = mock_html
@@ -95,14 +95,14 @@ class YoutubeDownloadTestCase(unittest.TestCase):
 #         self.assertEquals(video.extension, 'webm')
 #         self.assertEqual(video.resolution, '360p')
 
-    def test_youtube_download(self):
-        # todo mock
-        # given
-        url = "https://www.youtube.com/watch?v=io8SgjNcNbk"
-        # when
-        video_path = youtube_download.YoutubeDownload(url).download(music_server.config.tmp_folder)
-        # then
-        self.assertEquals(music_server.config.tmp_folder + 'PRATOS - OSNI.mp4', video_path)
+#     def test_youtube_download(self):
+#         # todo mock
+#         # given
+#         url = "https://www.youtube.com/watch?v=io8SgjNcNbk"
+#         # when
+#         video_path = youtube_download.YoutubeDownload(url).download(music_server.config.tmp_folder)
+#         # then
+#         self.assertEquals(music_server.config.tmp_folder + 'PRATOS - OSNI.mp4', video_path)
 
 if __name__ == '__main__':
     unittest.main()

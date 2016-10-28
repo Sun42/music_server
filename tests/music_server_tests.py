@@ -41,7 +41,7 @@ class MusicServerTestCase(unittest.TestCase):
     # @patch('music_server.converter.video_to_audio')
     def test_download(self, download_patch):
         # given
-        shutil.copy(config.test_folder + "video_ok.mp4", config.tmp_folder + "video_ok.mp4")
+        shutil.copy(config.test_resources_folder + "video_ok.mp4", config.tmp_folder + "video_ok.mp4")
         url = urllib.quote('https://www.youtube.com/watch?v=WPw7nlluRdc')
         download_patch.return_value = config.tmp_folder + 'video_ok.mp4'
         # when
