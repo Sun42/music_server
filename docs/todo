@@ -1,6 +1,7 @@
 Features:
-- tests add resource folder
-- restore download first result remove artist/title naming convention
+- dont download twice the same file
+- remove artist/title naming convention and dead code
+- better mocks
 - add source soundcloud
 - verify audio file integrity with audiotools http://audiotools.sourceforge.net/ or with this snippet http://peterjc.com/python/verifying-that-an-mp3-file-is-valid-in-python/
 - engineer nova playlists
@@ -15,7 +16,7 @@ NiceToHave:
 - Add try except urllib
 - Create /check and directories at startup (config file?)
 - Dynamic config app path
-- Use youtube API
+- Use youtube API for searching
 - Set up eclipse unittest, git
 
 Bugs:

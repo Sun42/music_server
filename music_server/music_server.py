@@ -18,11 +18,12 @@ logging.basicConfig(filename = config.application_path + 'music_server.log' ,for
 app = Flask(__name__)
 CORS(app)
 
-# @app.route('/songs/get/<artist_name>/<song_name>')
-# def get_song(artist_name, song_name):
-#         audio_name = util.make_audio_name(artist_name, song_name)
-#         new_audio_filename = config.music_folder + audio_name
-#         if not util.find_in_filesystem(config.music_folder, audio_name):
+@app.route('/search_and_download/<path:search_query>')
+def search_and_download(search_query):
+    logging.info("Search and download : " + search_query)
+    video_url = YoutubeSearch(search_query).video_ids[0]
+    logging.info("Found first result : " + video_url)
+    return download(video_url)
 #             video_file = download_first_result(artist_name + ' ' + song_name)
 #             logging.info("Video file name : " + video_file)
 #             downloaded_audio_file = video_to_audio(video_file)

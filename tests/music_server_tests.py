@@ -27,7 +27,6 @@ class MusicServerTestCase(unittest.TestCase):
         rv = self.app.get('/')
         assert b'Not found' in rv.data
 
-    #  @todo mock
     def test_search(self):
         # given
         search_query = "pratos osni"
@@ -48,6 +47,14 @@ class MusicServerTestCase(unittest.TestCase):
         rv = self.app.get("/download/" + url)
         # then
         assert b'http://localhost/music/video_ok.mp3' in rv.data
+
+    def test_search_and_download(self):
+        # given
+        search_query = "PJ Harvey - Plants and Rags Astanapan Vrasta"
+        # when
+        rv = self.app.get('/search_and_download/' + search_query)
+        # then
+        assert b'http://localhost/music/PJ Harvey - Plants and Rags.mp3' in rv.data
 
 if __name__ == '__main__':
     unittest.main()

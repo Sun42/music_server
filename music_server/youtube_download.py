@@ -11,8 +11,8 @@ class YoutubeDownload:
 
     # returns full path filename of the downloaded video
     def download(self, dest_folder):
-        self._video.download(dest_folder)
         video_full_path = dest_folder + self._video.filename + '.' + self._video.extension
+        self._video.download(dest_folder)
         logging.info(video_full_path)
         return video_full_path
 
@@ -23,21 +23,3 @@ def select_video(youtube_obj):
     else:
         video = youtube_obj.getVideos()[-1]
     return video
-
-#     def download_first_result(search_query):
-#         if not search_query:
-#             return search_query
-#         req = urllib2.Request(format_youtube_query(search_query))
-#         response = urllib2.urlopen(req)
-#         fetched_result = fetch_results(response.read(), 1)
-#         if not fetched_result:
-#             return None
-#         if not fetched_result[0]:
-#             return None
-#         url = "http://www.youtube.com/watch?v=" + fetched_result[0]
-#         yt = YouTube(url)
-#         video = select_video(yt)
-#         video.download(config.tmp_folder)
-#         video_full_path = config.tmp_folder + video.filename + '.' + video.extension
-#         logging.info(video_full_path)
-#         return video_full_path
