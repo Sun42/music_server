@@ -23,14 +23,7 @@ def search_and_download(search_query):
     logging.info("Search and download : " + search_query)
     video_url = YoutubeSearch(search_query).video_ids[0]
     logging.info("Found first result : " + video_url)
-    return download(video_url)
-#             video_file = download_first_result(artist_name + ' ' + song_name)
-#             logging.info("Video file name : " + video_file)
-#             downloaded_audio_file = video_to_audio(video_file)
-#             logging.info("Audio file name" + downloaded_audio_file)
-#             os.remove(video_file)
-#             shutil.move(downloaded_audio_file, new_audio_filename)
-#         return jsonify({'ok' : request.url_root + audio_name})
+    return download("https://youtube.com/watch?v=" + video_url)
 
 @app.route('/download/<path:url>')
 def download(url):

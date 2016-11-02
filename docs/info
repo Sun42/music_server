@@ -12,6 +12,7 @@ virtualenv flask
 ./flask/bin/pip install -U flask-cors
 ./flask/bin/pip install mock
 ./flask/bin/pip install uwsgi
+./flask/bin/pip install beautifulsoup4
 
 # objbrowser requires PyQT4, SIP
 sudo apt-get install python2.7-dev libxext-dev qt4-dev-tools build-essential
@@ -26,8 +27,8 @@ Launch app:
 cd <app_dir>
 ./flask/bin/python ./music_server/music_server.py
 
-Call app :
-curl -i http://localhost:5000/songs/download/PRATOS/UNIVERS
+Call flask app :
+curl -i http://localhost:5000/search
 
 Launch wsgi
 cd <app_dir>
